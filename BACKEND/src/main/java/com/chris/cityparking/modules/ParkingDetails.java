@@ -31,17 +31,17 @@ public class ParkingDetails {
     private String parkingLotName;
 
     @Temporal(TemporalType.DATE)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC+3")
     private Date parkingDate;
 
     @Temporal(TemporalType.TIME)
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm", timezone = "UTC+3")
     private Date parkTime;
 
     private int parkDuration;
 
     @Temporal(TemporalType.TIME)
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm", timezone = "UTC+3")
     private Date expiryParkTime;
 
     private double amountPaid;
