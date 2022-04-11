@@ -109,6 +109,11 @@ export default function SideNavBar() {
         AuthService.logout();
     }
 
+   /* const Registration = () =>{
+        setOpen(false);
+        history.push("./motoristRegistration");
+        window.location.reload(true);
+    }*/
 
     const parseJwt = (token) => {
         try {
