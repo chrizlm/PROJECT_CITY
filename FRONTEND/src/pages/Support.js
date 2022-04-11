@@ -1,96 +1,26 @@
+
 import React, {useEffect, useState} from 'react'
 import {makeStyles} from "@mui/styles";
-import {Box, Button, Grid, Paper} from '@mui/material';
-import Controls from "../components/controls/Controls";
-import {Form} from "../components/UseForm";
-import * as SockJS from 'sockjs-client';
-import * as Stomp from 'stompjs';
-import TextField from "@mui/material/TextField";
+import {Box, Button, Grid, Paper, Card, CardActions, CardContent, CardMedia, Typography} from '@mui/material';
+import ParkPic from "../components/img/brett-jordan-erLrY4aKztg-unsplash.jpg"
 
 
 const useStyles = makeStyles({
     pageContent: {
-        margin: "40px",
-        padding: "24px",
+        marginLeft: "600px",
+        paddingLeft: "440px",
+
+
     },
 
 });
 
 
-const initialFieldValues = {
-    type: "",
-    content: "",
-    sender: "",
-};
 
-var socket = new SockJS('http://localhost:8080/ws');
-const stompClient = Stomp.over(socket);
 
 
 export default function Support() {
-    const [messageDetail, setMessageDetail] =useState(initialFieldValues);
-    //const [stompClient, setStompClient] = useState();
 
-
-    useEffect(() =>{
-        connection();
-    }, []);
-
-    const connection = (event) =>{
-       // var socket = new SockJS('http://localhost:8080/ws');
-        //stompClient = Stomp.over(socket);
-
-        stompClient.connect({
-            'Access-Control-Allow-Origin': 'http://localhost:3000',
-        }, onConnected)
-    }
-
-    const onConnected = () =>{
-        stompClient.subscribe('http://localhost:8080/topic/public', onMessageReceived);
-        stompClient.send(
-            "http://localhost:8080/app/chat.addUser",
-            {'Access-Control-Allow-Origin': 'http://localhost:3000',},
-            JSON.stringify({sender: "userA", type: 'JOIN'})
-        )
-    }
-
-    const handleSubmitMessage = (event) =>{
-        event.preventDefault();
-
-        const data = {
-            type: messageDetail.type,
-            content: messageDetail.content,
-            sender: messageDetail.sender,
-        }
-
-        stompClient.send("http://localhost:8080/app/chat.sendMessage", {'Access-Control-Allow-Origin': 'http://localhost:3000',}, JSON.stringify(data));
-
-    };
-
-    const onMessageReceived =(messagePayload) =>{
-        var message = JSON.parse(messagePayload.body);
-        if(message.type === 'JOIN') {
-            message.content = message.sender + ' joined!';
-        } else if (message.type === 'LEAVE') {
-            message.content = message.sender + ' left!';
-        }
-
-
-        var messageText = document.createTextNode(message.content);
-        return(
-            <div>{messageText}</div>
-        )
-    }
-
-
-    const handleInputChange = e =>{
-
-        const {name, value} = e.target
-        setMessageDetail({
-            ...messageDetail,
-            [name]: value,
-        })
-    }
 
     const classes = useStyles();
     return (
@@ -101,6 +31,9 @@ export default function Support() {
             <Box
                 sx={{
                     display: 'flex',
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "20px",
                     flexWrap: 'wrap',
                     '& > :not(style)': {
                         m: 1,
@@ -109,35 +42,27 @@ export default function Support() {
                     },
                 }}
             >
-                <div>
-                    <h1>Support</h1>
-                </div>
                 <Paper elevation={3} className={classes.pageContent}>
-                   <ul>
-                       {onMessageReceived}
-                   </ul>
+                    <Card sx={{ maxWidth: 345}}>
+                        <CardMedia
+                            component="img"
+                            alt="help chat"
+                            height="140"
+                            image={ParkPic}/>
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="div">Online Help Chat</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                In case of any challenges experienced within this application please click the button below and you will be redirected to a chat box <br/>
+                                In the chat box you can relay your complaints with the support team directly
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <a href={"https://tawk.to/chat/625166de7b967b11798990ef/1g06vjm7k"}>
+                            <Button size="fullWidth" variant="contained">TO SUPPORT CHAT BOX</Button>
+                            </a>
+                        </CardActions>
+                    </Card>
 
-                    <Form onSubmit={handleSubmitMessage}>
-                        <Grid container>
-                            <Grid item xs={6}>
-                                <TextField
-                                    variant="outlined"
-                                    label="Help"
-                                    placeholder="Type any issue you need of assistance with ..."
-                                    multiline
-                                    rows={7}
-                                    maxRows={7}
-                                    name="help"
-                                    value={messageDetail.content}
-                                    onChange={handleInputChange}
-                                />
-                                <Button variant="contained"
-                                        fullWidth
-                                        onClick={handleSubmitMessage}
-                                >SEND</Button>
-                            </Grid>
-                        </Grid>
-                    </Form>
                 </Paper>
             </Box>
 
@@ -145,5 +70,12 @@ export default function Support() {
 
     )
 }
+
+
+/*<a href={"https://tawk.to/chat/625166de7b967b11798990ef/1g06vjm7k"}>
+    <Button variant="contained"
+            fullWidth
+    >TO CHAT BOX</Button>
+</a>*/
 
 

@@ -59,6 +59,7 @@ const useStyles = makeStyles({
     parkingDate: "",
     parkTime: "",
     parkDuration: "",
+      phoneNumber: "",
    
   };
 
@@ -414,7 +415,7 @@ export default function Bookings(props) {
 
           <Controls.Input
               variant="outlined"
-              label="Park Duration"
+              label="Park Duration (in hours)"
               name="parkDuration"
               value={parkDetail.parkDuration}
               onChange={handleInputChange}
@@ -437,6 +438,14 @@ export default function Bookings(props) {
               <DialogContent>
                   <DialogContentText id="alert-dialog-description" className={classes.formlogin}>
                       Charges for this parking is : {amount}
+                      <br/>
+                      <Controls.Input
+                          variant="outlined"
+                          label="Phone number"
+                          name="phoneNumber"
+                          value={parkDetail.phoneNumber}
+                          onChange={handleInputChange}
+                      />
                       </DialogContentText>
                   <Button variant="contained"
                           fullWidth

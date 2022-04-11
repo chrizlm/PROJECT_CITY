@@ -7,6 +7,7 @@ import React, {useState} from 'react';
 import MotoristService from "../service/MotoristService";
 import TextField from "@mui/material/TextField";
 import {useHistory} from "react-router-dom";
+import axios from "axios";
 
 
 const useStyles = makeStyles({
@@ -63,14 +64,35 @@ export default function MotoristRegistration(){
             password: motoristDetail.password,
         }
 
-        MotoristService.registerMotorist(data).then(response =>{
+        const headers = {
+
+            "Accept": "application/json",
+                'Access-Control-Allow-Origin': 'http://localhost:3000',
+                //"Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+                //"Content-Type": "application/x-www-form-urlencoded",
+                // 'Access-Control-Allow-Credentials': 'true',
+                'Authorization': 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1bmtub3duQGdtYWlsLmNvbSIsInJvbGVzIjpbIlJPTEVfTU9UT1JJU1QiXSwiZXhwIjoxNjQ5NjYzNDg3fQ.DzoIsS8F8MN52kCpzmY7YTaAiiVm1M6iS6EG1MmdhCw',
+
+        };
+
+        axios.post('http://localhost:8080/apiv1/motorist/save', data, { headers }).then(response =>{
             alert("successful registration");
             console.log(response);
-            history.push("./Home");
+            history.push("./");
         }).catch(error =>{
             alert("registration error");
             console.log(error)
         });
+
+        /*MotoristService.registerMotorist(data).then(response =>{
+            alert("successful registration");
+            console.log(response);
+            history.push("./home");
+        }).catch(error =>{
+            alert("registration error");
+            console.log(error)
+        });*/
     };
 
     const classes = useStyles();

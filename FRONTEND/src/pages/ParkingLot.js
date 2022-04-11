@@ -221,12 +221,12 @@ export default function ParkingLot() {
                     <div>
                         <Controls.Input
                             variant="outlined"
-                            label="Search Parking Lot"
+                            label="Location"
                             value={searchLocation}
                             onChange={onChangeSearchLocation}
                         />
                         <Button variant="contained"
-                                onClick={findParkingLotByLocation}>Search</Button>
+                                onClick={findParkingLotByLocation}>Search parking lots</Button>
                     </div>
                     <div align="right">
                         <Button variant="contained"
